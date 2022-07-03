@@ -2,5 +2,6 @@
 CREATE TRIGGER v_email BEFORE INSERT ON email
 FOR EACH ROW
 	BEGIN
-		UPDATE users SET valid_email=New.email WHERE New.email NOT REGEXP '^[^@]+@[^@]+\.[^@]{2,}$';
+		UPDATE users SET email=New.email;
+		IF (New.email REGEXP '^[^@]+@[^@]+\.[^@]{2,}$') THEN SET valid_email=0;
 	END;
