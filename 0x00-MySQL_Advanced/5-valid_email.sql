@@ -4,7 +4,7 @@ FOR EACH ROW
 	BEGIN
 		IF (New.email REGEXP '^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9][a-zA-Z0-9._-]*\\.[a‌​-zA-Z]{2,4}$')
 			THEN
-			UPDATE users SET New.valid_email=0;
+			UPDATE users SET @valid_email=0;
 		ELSE
-			UPDATE users SET New.valid_email=1;
+			UPDATE users SET @valid_email=1;
 	END;
