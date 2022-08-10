@@ -2,4 +2,4 @@
 CREATE TRIGGER decrease AFTER INSERT ON orders
 FOR EACH ROW
 	UPDATE items
-	SET quantity = quantity - New.quantity WHERE name = New.item_name;
+	SET quantity = quantity - New.number WHERE name = New.item_name;
