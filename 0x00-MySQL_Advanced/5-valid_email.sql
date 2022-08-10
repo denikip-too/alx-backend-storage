@@ -1,5 +1,5 @@
 -- trigger that resets attribute valid_email only when the email has changed
-CREATE TRIGGER v_email BEFORE INSERT ON email
+CREATE TRIGGER v_email BEFORE UPDATE ON users
 FOR EACH ROW
 	BEGIN
 		IF (New.email REGEXP '^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9][a-zA-Z0-9._-]*\\.[a‌​-zA-Z]{2,4}$')
@@ -7,4 +7,5 @@ FOR EACH ROW
 			UPDATE users SET @valid_email=0;
 		ELSE
 			UPDATE users SET @valid_email=1;
-	END;
+		END IF;
+	END
