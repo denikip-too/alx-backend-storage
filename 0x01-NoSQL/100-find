@@ -1,2 +1,2 @@
 // list all documents with name starting by Holberton in the collection school
-db.school.find({ name: "{ filter: "Holberton" }" })
+db.school.find({ name.first: "Holberton" })
