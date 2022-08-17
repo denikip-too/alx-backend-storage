@@ -8,14 +8,24 @@ from functools import wraps
 class Cache:
     """Cache class"""
 
+    count = 0
+
     def __init__(self):
         """store an instance of the Redis client as a private variable named
         _redis (using redis.Redis()) and flush the instance using flushdb"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @Cache.store
+    def count_calls():
+        """decorator"""
+        def __qualname__():
+            """dunder method"""
+            Cache.count += 1
+
     def store(self, data: [str, bytes, int, float]) -> str:
         """method that takes a data argument and returns a string"""
+        @wraps(data)
         self.data = uuid.uuid1()
         return (str(self.data))
 
