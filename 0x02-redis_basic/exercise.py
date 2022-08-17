@@ -3,12 +3,18 @@
 import redis
 import uuid
 from functools import wraps
+from typing import Union
+
+
+"""def count_calls(func):
+        decorator
+        @wraps(func)
+        def __qualname__():
+            dunder method"""
 
 
 class Cache:
     """Cache class"""
-
-    count = 0
 
     def __init__(self):
         """store an instance of the Redis client as a private variable named
@@ -16,18 +22,12 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @Cache.store
-    def count_calls():
-        """decorator"""
-        def __qualname__():
-            """dunder method"""
-            Cache.count += 1
-
-    def store(self, data: [str, bytes, int, float]) -> str:
+    @count_calls
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """method that takes a data argument and returns a string"""
-        @wraps(data)
-        self.data = uuid.uuid1()
-        return (str(self.data))
+        r = str(uuid.uuid1())
+        self._redis.set(r, data)
+        return (r)
 
     def get(self, key, fn = 'fn'):
         """will be used to convert the data back to the desired format"""
