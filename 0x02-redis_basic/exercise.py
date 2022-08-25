@@ -10,15 +10,20 @@ from collections.abc import Callable
 R = TypeVar('R')
 
 
-"""def count_calls(func):
-        decorator
+def count_calls(func: Callable):
+        """decorator"""
         @wraps(func)
-        def __qualname__():
-            dunder method"""
+        def wrapped(*args):
+            """count how many times methods of the Cache class are called"""
+            print(func.__qualname__)
+            func(*args)
+        return (wrapped)
 
 
 class Cache:
     """Cache class"""
+
+    count = 0
 
     def __init__(self):
         """store an instance of the Redis client as a private variable named
@@ -26,7 +31,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    """@count_calls"""
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """method that takes a data argument and returns a string"""
         r = str(uuid.uuid1())
