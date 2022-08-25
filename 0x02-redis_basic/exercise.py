@@ -3,7 +3,11 @@
 import redis
 import uuid
 from functools import wraps
-from typing import Union
+from typing import Union, TypeVar, Optional
+from collections.abc import Callable
+
+
+R = TypeVar('R')
 
 
 """def count_calls(func):
@@ -29,7 +33,7 @@ class Cache:
         self._redis.set(r, data)
         return (r)
 
-    def get(self, key, fn = 'fn'):
+    def get(self, key: str, fn: Optional[Callable] = None):
         """will be used to convert the data back to the desired format"""
         if key is None:
             return (self._redis)
